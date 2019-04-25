@@ -1,0 +1,24 @@
+---
+- name: Create temporary directory to store related files
+  tempfile:
+    state: directory
+    suffix: sonarqube
+  register: sonarqube_temp_dir
+
+- name: Interpolate Ansible variables
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ sonarqube_temp_dir.path }}/docker-compose.yml"
+  when: "inventory_hostname == groups['integr8-docker-swarm-manager'][0]"
+
+- name: Deploy Selenium HUB in Swarm
+  command: 'docker stack deploy --compose-file {{ sonarqube_temp_dir.path }}/docker-compose.yml sonarqube'
+  when: "inventory_hostname == groups['integr8-docker-swarm-manager'][0]"
+
+- name: Record Traefik DNS
+  ara_record:
+    key: "sonarqube_host"
+    value: "http://{{ sonarqube_host }}"
+    type: url
+  tags:
+    - skip_ansible_lint

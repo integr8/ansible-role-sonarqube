@@ -1,0 +1,3 @@
+---
+sonarqube_docker_image_version: lts
+sonarqube_host: sonarqube.integr8.me
