@@ -1,3 +1,4 @@
 ---
-sonarqube_docker_image_version: lts
+sonarqube_docker_image_version: 7.7-community
+postgresql_docker_image_version: 9-alpine
 sonarqube_host: sonarqube.integr8.me

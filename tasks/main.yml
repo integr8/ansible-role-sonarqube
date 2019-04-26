@@ -11,7 +11,7 @@
     dest: "{{ sonarqube_temp_dir.path }}/docker-compose.yml"
   when: "inventory_hostname == groups['integr8-docker-swarm-manager'][0]"
 
-- name: Deploy Selenium HUB in Swarm
+- name: Deploy SonarQube in Swarm
   command: 'docker stack deploy --compose-file {{ sonarqube_temp_dir.path }}/docker-compose.yml sonarqube'
   when: "inventory_hostname == groups['integr8-docker-swarm-manager'][0]"
 
